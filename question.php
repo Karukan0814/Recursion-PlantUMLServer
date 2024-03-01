@@ -43,7 +43,7 @@ if ($result === false) {
     $output = shell_exec($command);
 
     // 入力コードファイルを削除
-    unlink($filePath);
+    // unlink($filePath);
 }
 
 ?>
@@ -67,6 +67,8 @@ if ($result === false) {
             <div id="placeholder" style="position: absolute; top:0; left:0; z-index:1; color:slategray">ここにコードを書いてください</div>
         </div>
         <div id="preview" style="width: 33.3%; height: 600px;border: 1px solid slategray;">
+        <img id="userImage" src="" alt="userUMLImg"  style="display: none; max-width: 100%; min-width: 100px; height: 500px; object-fit: contain;">
+
         </div>
         <div id="answer" style="width: 33.3%; height: 600px;border: 1px solid slategray;">
             <div>
@@ -134,13 +136,39 @@ if ($result === false) {
                 timeout = setTimeout(() => {
                     // ユーザーが入力を停止したときの処理
 
-                    let markdown = editor.getValue();
-                    console.log(markdown);
-                    let html = marked(markdown);
-                    document.getElementById("preview").innerHTML = html;
+                    fetch('generateUML.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'code=' + encodeURIComponent(editor.getValue()),
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            // PHPスクリプトからの応答を処理
+                            console.log("data",data);
+                            var img = document.getElementById('userImage');
+                            
+                            if(data){
+                                img.src = data + '?t=' + new Date().getTime();
+                                img.style.display = 'inline'; 
+                            }else{
+                                img.style.display = 'none';
+                            }
+
+                        })
+                        .catch(error => {
+                            // console.error('Error:', error);
+                        });
 
 
-                    console.log('Input stopped');
+                    // let markdown = editor.getValue();
+                    // console.log(markdown);
+                    // let html = marked(markdown);
+                    // document.getElementById("preview").innerHTML = html;
+
+
+                    // console.log('Input stopped');
                 }, 300);
 
             });
