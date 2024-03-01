@@ -118,8 +118,10 @@ if ($result === false) {
                 language: "markdown",
             });
 
+            let timeout;
             editor.onDidChangeModelContent(function() {
 
+                // ユーザーがエディターに記入したらプレイスホルダーを消す
                 var placeholder = document.getElementById("placeholder");
                 if (editor.getValue()) {
                     placeholder.style.display = "none";
@@ -127,14 +129,20 @@ if ($result === false) {
                     placeholder.style.display = "block";
                 }
 
+                //ユーザーが3秒手を止めたらUML図を作成
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    // ユーザーが入力を停止したときの処理
 
-                document.getElementById("editorContent").value = editor.getValue();
-                // document.getElementById('preview').innerHTML = editor.getValue();
+                    let markdown = editor.getValue();
+                    console.log(markdown);
+                    let html = marked(markdown);
+                    document.getElementById("preview").innerHTML = html;
 
-                let markdown = editor.getValue();
-                console.log(markdown);
-                let html = marked(markdown);
-                document.getElementById("preview").innerHTML = html;
+
+                    console.log('Input stopped');
+                }, 300);
+
             });
         });
     </script>
