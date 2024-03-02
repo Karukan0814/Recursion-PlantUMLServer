@@ -42,6 +42,8 @@ if ($result === false) {
     $command = 'java -jar plantUMLsource/plantuml-1.2024.3.jar ' . $filePath;
     $output = shell_exec($command);
 
+    echo $output;
+
     // 入力コードファイルを削除
     // unlink($filePath);
 }
@@ -67,17 +69,20 @@ if ($result === false) {
             <div id="placeholder" style="position: absolute; top:0; left:0; z-index:1; color:slategray">ここにコードを書いてください</div>
         </div>
         <div id="preview" style="width: 33.3%; height: 600px;border: 1px solid slategray;">
-        <img id="userImage" src="" alt="userUMLImg"  style="display: none; max-width: 100%; min-width: 100px; height: 500px; object-fit: contain;">
+        <img id="userImage" src="" alt="userUMLImg"  style="display: none; max-width: 90%; min-width: 100px; height: 500px; object-fit: contain;">
 
         </div>
-        <div id="answer" style="width: 33.3%; height: 600px;border: 1px solid slategray;">
+        <div id="answer" style="width: 33.3%; height: 600px;border: 1px solid slategray; ">
             <div>
 
                 <button type="button" id="answerUMLButton">AnswerUML</button>
                 <button type="button" id="answerCodeButton">AnswerCode</button>
             </div>
-            <div id="answerCodeHtml" style="width: 100%; height: 100px; display:none"><?= $answerCode ?></div>
-            <img id="answerImage" src="<?= $output ?>" alt="<?= $title ?>" width="100%" height="500">
+            <div style="width: 100%; height: 100%; padding:10px;">
+
+                <pre id="answerCodeHtml" style="width: 100%; height: 100%; display:none;"><?= $answerCode ?></pre>
+                <img id="answerImage" src="/temp/answerCode.png" alt="<?= $title ?>" style="max-width: 90%; min-width: 100px; height: 500px; object-fit: contain;" >
+            </div>
 
         </div>
 
