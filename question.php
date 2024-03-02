@@ -88,9 +88,14 @@ if ($result === false) {
 
     </div>
 
-    <form id="editorForm" action="submit.php" method="post">
-        <input type="hidden" id="editorContent" name="editorContent" />
-
+    <form id="editorForm" action="generateUML.php" method="post">
+        <input type="hidden" id="code" name="code" />
+        <label for="format">Download Format:</label>
+        <select id="format" name="format">
+            <option value="png">.png</option>
+            <option value="svg">.svg</option>
+            <option value="txt">.txt</option>
+        </select>
         <button type="submit">Download</button>
     </form>
 
@@ -136,6 +141,10 @@ if ($result === false) {
                     placeholder.style.display = "block";
                 }
 
+                // ダウンロードフォームにコードを格納する
+                var codeInput = document.getElementById('code');
+        codeInput.value = editor.getValue();
+
                 //ユーザーが3秒手を止めたらUML図を作成
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
@@ -155,7 +164,7 @@ if ($result === false) {
                             var img = document.getElementById('userImage');
                             
                             if(data){
-                                img.src = data + '?t=' + new Date().getTime();
+                                img.src = "temp/userCode.png" + '?t=' + new Date().getTime();
                                 img.style.display = 'inline'; 
                             }else{
                                 img.style.display = 'none';

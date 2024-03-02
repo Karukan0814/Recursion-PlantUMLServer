@@ -2,7 +2,9 @@
 
 
 // 引数である元コードをPOSTで受け取る
-$code = $_POST['code'] ;
+$code = $_POST['code'];
+$format = $_POST['format'];
+
 
 // フォルダのパス
 $folderPath = 'temp';
@@ -22,17 +24,42 @@ $result = file_put_contents($filePath, $code);
 if ($result === false) {
     echo false;
 } else {
-    unlink($folderPath . '/userCode.png');
+    // unlink($folderPath . '/userCode.png');
+
+    $format_command = "";
+    if ($format === "svg") {
+        $format_command = "-tsvg ";
+    }
 
     //コマンドをたたいてUMLのイメージを作成
-    $command = 'java -jar plantUMLsource/plantuml-1.2024.3.jar ' . $filePath;
-    $output = shell_exec($command);
+    $command = 'java -jar plantUMLsource/plantuml-1.2024.3.jar ' . $format_command . $filePath;
+    shell_exec($command);
+
+    if ($format === "svg") {
+
+        header('Content-Type: image/svg+xml');
+        header('Content-Disposition: attachment; filename="userCode.svg"');
+        readfile($folderPath . "/userCode.svg");
+
+    } else if ($format === "png") {
+
+        header('Content-Type: image/png');
+        header('Content-Disposition: attachment; filename="userCode.png"');
+        readfile($folderPath . "/userCode.png");
+    } else if ($format === "txt") {
+
+        header('Content-Type: text/plain');
+        header('Content-Disposition: attachment; filename="userCode.txt"');
+
+        echo $code;
+    } else {
+        echo $folderPath . '/userCode.png';
+    }
+
+
 
     // 入力コードファイルを削除
-    unlink($filePath);
+    // unlink($filePath);
 }
 
-//TODO ファイルパスを返却
-echo $folderPath . '/userCode.png';
-// echo $output;
-?>
+
