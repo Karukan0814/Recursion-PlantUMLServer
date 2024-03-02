@@ -59,7 +59,7 @@ if ($result === false) {
 
 
     // 入力コードファイルを削除
-    // unlink($filePath);
+    unlink($filePath);
 }
 
 
