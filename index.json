@@ -1,18 +1,25 @@
 [
   {
-    "id": 5,
-    "title": "ライフラインの活性化",
+    "id": 1,
+    "title": "基本的な例",
     "theme": "シーケンス図",
-    "uml": "@startuml\nautoactivate on\nalice -> bob : hello\nbob -> bob : self call\nbill -> bob #005500 : hello from thread 2\nbob -> george ** : create\nreturn done in thread 2\nreturn rc\nbob -> george !! : delete\nreturn success\n@enduml"
+    "uml": "@startuml\nAlice -> Bob: Hello\nBob -> Alice: Hi\n@enduml"
   },
   {
-    "id": 4,
-    "title": "ライフラインの活性化",
+    "id": 2,
+    "title": "分類子の宣言",
     "theme": "シーケンス図",
-    "uml": "@startuml\nautoactivate on\nalice -> bob : hello\nbob -> bob : self call\nbill -> bob #005500 : hello from thread 2\nbob -> george ** : create\nreturn done in thread 2\nreturn rc\nbob -> george !! : delete\nreturn success\n@enduml"
+    "uml": "@startuml\nactor Alice\nparticipant Bob as B\nAlice -> B: Hello\nB -> Alice: Hi\n@enduml\n"
   },
   {
     "id": 3,
+    "title": "矢印の見た目を変える",
+    "theme": "シーケンス図",
+    "uml": "@startuml\nAlice -> Bob: Regular arrow\nAlice --> Bob: Dashed arrow\nAlice ->> Bob: Open arrow\nAlice -\\ Bob: Arrow with a line break\nAlice -[#red]> Bob: Arrow with a color\n@enduml\n"
+  },
+
+  {
+    "id": 4,
     "title": "ライフラインの活性化",
     "theme": "シーケンス図",
     "uml": "@startuml\nautoactivate on\nalice -> bob : hello\nbob -> bob : self call\nbill -> bob #005500 : hello from thread 2\nbob -> george ** : create\nreturn done in thread 2\nreturn rc\nbob -> george !! : delete\nreturn success\n@enduml"
