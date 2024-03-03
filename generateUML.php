@@ -24,7 +24,14 @@ $result = file_put_contents($filePath, $code);
 if ($result === false) {
     echo false;
 } else {
-    // unlink($folderPath . '/userCode.png');
+
+    if (file_exists($folderPath . '/userCode.png')) {
+        unlink($folderPath . '/userCode.png');
+    }
+    if (file_exists($folderPath . '/userCode.svg')) {
+        unlink($folderPath . '/userCode.svg');
+    }
+
 
     $format_command = "";
     if ($format === "svg") {
@@ -41,11 +48,14 @@ if ($result === false) {
         header('Content-Disposition: attachment; filename="userCode.svg"');
         readfile($folderPath . "/userCode.svg");
 
+        // unlink($folderPath . '/userCode.svg');
     } else if ($format === "png") {
 
         header('Content-Type: image/png');
         header('Content-Disposition: attachment; filename="userCode.png"');
         readfile($folderPath . "/userCode.png");
+
+        // unlink($folderPath . '/userCode.png');
     } else if ($format === "txt") {
 
         header('Content-Type: text/plain');
@@ -61,5 +71,3 @@ if ($result === false) {
     // 入力コードファイルを削除
     unlink($filePath);
 }
-
-
