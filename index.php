@@ -45,7 +45,7 @@ $questionList = json_decode($jsonString, true);
   </tr>
   <?php foreach ($questionList as $question) : ?>
    
-    <tr class="row" window.location.href = 'question.php?id=<?= $question['id'] ?>'">
+    <tr class="row" onclick="window.location.href='question.php?id=<?= $question['id'] ?>'">
         <td> <?= $question['id'] ?></td>
         <td><?= $question['title'] ?></td>
         <td><?= $question['theme'] ?></td>
